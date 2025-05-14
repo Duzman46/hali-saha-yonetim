@@ -1,0 +1,36 @@
+/* Global stil dosyası */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Sayfa düzeyinde scrollu kaldır */
+  height: 100%;
+  width: 100%;
+}
+
+/* Antd componentlerinde scrollun görünümünü iyileştir */
+.ant-layout-content {
+  overflow-y: auto; /* İçerik alanında scroll olsun */
+  height: calc(100vh - 64px); /* Header yüksekliğini çıkarıyoruz */
+  scrollbar-width: thin; /* Firefox için */
+}
+
+/* Webkit tarayıcıları için scrollbar stillerini özelleştir */
+.ant-layout-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ant-layout-content::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9;
+  border-radius: 3px;
+}
+
+.ant-layout-content::-webkit-scrollbar-track {
+  background-color: #f0f2f5;
+}
+
+/* Mobil cihazlar için scroll ayarları */
+@media (max-width: 768px) {
+  .ant-layout-content::-webkit-scrollbar {
+    width: 4px;
+  }
+} 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Card, Descriptions, Avatar, Tabs, Form, Input, Button, Row, Col, Divider, Alert, Modal, Typography, Space, Spin, App } from 'antd';
+import { Card, Descriptions, Avatar, Tabs, Form, Input, Button, Row, Col, Divider, Alert, Modal, Typography, Space, Spin, App, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, EditOutlined, SaveOutlined, CheckCircleOutlined, TeamOutlined, LoadingOutlined } from '@ant-design/icons';
 import { updateUserPassword } from '../utils/googleSheets';
 import dayjs from 'dayjs';
 
 const { Title, Text, Paragraph } = Typography;
-const { message } = App;
 
 const Profil = ({ user, onUpdateUser }) => {
   const [loading, setLoading] = useState(false);
@@ -15,23 +14,24 @@ const Profil = ({ user, onUpdateUser }) => {
   const [successVisible, setSuccessVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [activeTab, setActiveTab] = useState('1'); // Aktif sekme için state ekledim
+  const [messageApi, messageContextHolder] = message.useMessage();
 
   const handleChangePassword = async () => {
     // Form validasyonu
     if (!currentPassword) {
-      message.error('Lütfen mevcut şifrenizi girin');
+      messageApi.error('Lütfen mevcut şifrenizi girin');
       return;
     }
     if (!newPassword) {
-      message.error('Lütfen yeni şifrenizi girin');
+      messageApi.error('Lütfen yeni şifrenizi girin');
       return;
     }
     if (newPassword !== confirmPassword) {
-      message.error('Yeni şifre ve onay şifresi eşleşmiyor');
+      messageApi.error('Yeni şifre ve onay şifresi eşleşmiyor');
       return;
     }
     if (newPassword.length < 6) {
-      message.error('Yeni şifre en az 6 karakter olmalıdır');
+      messageApi.error('Yeni şifre en az 6 karakter olmalıdır');
       return;
     }
 
@@ -40,7 +40,7 @@ const Profil = ({ user, onUpdateUser }) => {
     
     try {
       // İşlem başladığında bilgilendirme mesajı göster
-      const loadingMessage = message.loading('Şifreniz güncelleniyor, lütfen bekleyin...', 0);
+      const loadingMessage = messageApi.loading('Şifreniz güncelleniyor, lütfen bekleyin...', 0);
       
       // Şifre değiştirme API'sini çağır
       const result = await updateUserPassword({
@@ -73,11 +73,11 @@ const Profil = ({ user, onUpdateUser }) => {
         }
       } else {
         setErrorMessage(result.message || 'Şifre değiştirme işlemi başarısız oldu');
-        message.error(result.message || 'Şifre değiştirme işlemi başarısız oldu');
+        messageApi.error(result.message || 'Şifre değiştirme işlemi başarısız oldu');
       }
     } catch (error) {
       setErrorMessage('Şifre değiştirme sırasında bir hata oluştu: ' + error.message);
-      message.error('Şifre değiştirme sırasında bir hata oluştu');
+      messageApi.error('Şifre değiştirme sırasında bir hata oluştu');
     } finally {
       setLoading(false);
     }
@@ -246,6 +246,7 @@ const Profil = ({ user, onUpdateUser }) => {
 
   return (
     <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+      {messageContextHolder}
       <Row gutter={24}>
         {/* Sol Panel - Kullanıcı Profili */}
         <Col xs={24} md={8} style={{ marginBottom: '24px' }}>

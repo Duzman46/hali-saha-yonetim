@@ -116,7 +116,7 @@ Profilinizde kişisel bilgilerinizi görüntüleyebilir ve şifrenizi değiştir
 
 ## 📞 İletişim
 
-Furkan Düzman - [furkanduzman46@gmail.com](mailto:furkanduzman46@gmail.com)
+Hasan Furkan Duzman - [furkanduzman46@gmail.com](mailto:furkanduzman46@gmail.com)
 
 Proje Linki: [https://github.com/Duzman46/hali-saha-yonetim](https://github.com/Duzman46/hali-saha-yonetim)
 
